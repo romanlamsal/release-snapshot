@@ -1,0 +1,15 @@
+{
+  "name": "@lamsal-de/release-snapshot",
+  "version": "1.0.0",
+  "description": "",
+  "bin": "cli.js",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@lamsal-de/eslint-config": "^2.1.2",
+    "@types/node": "^22.13.1"
+  }
+}
