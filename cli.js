@@ -1,8 +1,12 @@
 import { execSync } from "node:child_process"
-import { readFileSync, writeFileSync } from "node:fs"
+import { existsSync, readFileSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 
 const packageJsonPath = join(process.cwd(), "package.json")
+
+if (!existsSync(packageJsonPath)) {
+    throw new Error(`Could not find package.json at ${packageJsonPath}.`)
+}
 
 const currentPackageJsonFileContents = readFileSync(packageJsonPath, "utf8")
 const packageJsonContents = JSON.parse(currentPackageJsonFileContents)
@@ -26,14 +30,14 @@ function getPublishArgs() {
     const doubleDashIdx = process.argv.findIndex(argv => argv === "--")
 
     if (doubleDashIdx === -1) {
-        return []
+        return [`--tag release-snapshot`]
     }
 
     const serializedArgs = process.argv.slice(doubleDashIdx + 1, process.argv.length).join(" ")
 
     const hasTagArg = process.argv.findIndex(argv => argv === "--tag") !== -1
     if (!hasTagArg) {
-        return `--tag ${snapshotTimestamp} ${serializedArgs}`
+        return `--tag release-snapshot ${serializedArgs}`
     }
 
     return serializedArgs
